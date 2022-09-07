@@ -11,8 +11,8 @@ for packet in capture.sniff_continuously(packet_count=25):
             ip[packet.ip.src] = 0      
         ip[packet.ip.src] += 1
     if "SSDP" in packet:
-        print(packet.ssdp.field_names)
-        if packet.ssdp.http_user_agent not in os:
+       # print(packet.ssdp.field_names)
+        if packet.ssdp.http_user_agent not in os:   
             os[packet.ssdp.http_user_agent] = 0      
         os[packet.ssdp.http_user_agent] += 1
 
