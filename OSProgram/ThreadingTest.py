@@ -7,14 +7,18 @@ from matplotlib import pyplot as plt
 import numpy as np
 ip = {}
 os = {}
+dns = {}
 capture = pyshark.LiveCapture(interface='WiFi')
 
 def Check_Packets():
     global os
     global ip
+    global dns
     while True:
         for packet in capture.sniff_continuously(packet_count=25):
+           
             if "IP" in packet:
+              
                 if packet.ip.src not in ip:
                     ip[packet.ip.src] = 0      
                 ip[packet.ip.src] += 1
@@ -22,12 +26,18 @@ def Check_Packets():
                 if packet.ssdp.http_user_agent not in os:   
                     os[packet.ssdp.http_user_agent] = 0      
                 os[packet.ssdp.http_user_agent] += 1
-        print(ip, os)
+            if "DNS" in packet:
+                if packet.dns.qry_name not in dns:   
+                    dns[packet.dns.qry_name] = 0      
+                dns[packet.dns.qry_name] += 1  
+                
+
+        print(ip, os, dns)
 
 def CreateGraph ():
     global os
     global ip
-    plt.pie(os.values(), labels = os.keys(), colors=["k", "b", "g", "r","c"]) 
+    plt.pie(os.values(), labels = os.keys(), colors=["b", "k", "g", "r","c","m","y"]) 
     plt.pause(0.05)  
 
 threads = []
