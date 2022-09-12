@@ -21,19 +21,19 @@ def Check_Packets():
             if "SSDP" in packet:
                 if packet.ssdp.http_user_agent not in os:   
                     os[packet.ssdp.http_user_agent] = 0      
-            os[packet.ssdp.http_user_agent] += 1
+                os[packet.ssdp.http_user_agent] += 1
 
 
 def CreateGraph ():
     global os
     global ip
-    fig = plt.figure(figsize =(10, 7))
-    plt.pie(os.values(), labels = os.keys()) 
+    plt.pie(os.values(), labels = os.keys(), colors=["k", "b", "g", "r","c"]) 
     plt.pause(0.05)  
 print(ip, os)
 threads = []
-
-
+fig = plt.figure(figsize =(10, 7))
+plt.ion()
+plt.show()
 t = threading.Thread(target=Check_Packets)
 t2 = threading.Thread(target=CreateGraph)
 t.daemon = True
