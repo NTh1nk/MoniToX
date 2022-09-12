@@ -1,5 +1,7 @@
 import threading
 from struct import pack
+from time import sleep
+from tracemalloc import start
 import pyshark
 from matplotlib import pyplot as plt
 import numpy as np
@@ -7,7 +9,9 @@ ip = {}
 os = {}
 capture = pyshark.LiveCapture(interface='WiFi')
 
-def Check_Packets(): 
+def Check_Packets():
+    global os
+    global ip
     for i in range(1):
         for packet in capture.sniff_continuously(packet_count=25):
             if "IP" in packet:
@@ -20,17 +24,27 @@ def Check_Packets():
             os[packet.ssdp.http_user_agent] += 1
 
 
-       
+def CreateGraph ():
+    global os
+    global ip
+    fig = plt.figure(figsize =(10, 7))
+    plt.pie(os.values(), labels = os.keys()) 
+    plt.pause(0.05)  
 print(ip, os)
 threads = []
 
-for i in range(50):
-    t = threading.Thread(target=Check_Packets)
-    t.daemon = True
-    threads.append(t)
 
-for i in range(50):
-    threads[i].start()
+t = threading.Thread(target=Check_Packets)
+t2 = threading.Thread(target=CreateGraph)
+t.daemon = True
+t2.daemon = True    
+threads.append(t)
+threads.append(t2)
 
-for i in range(50):
-    threads[i].join()
+threads[0].start()
+while True:
+    CreateGraph()
+
+threads[0].join()
+
+
