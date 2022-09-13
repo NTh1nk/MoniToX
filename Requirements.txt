@@ -1,3 +1,5 @@
-Pip
+Pip 21.1.1 or newer
 Wireshark
 PyShark
+matplotlib
+Python 3.2
