@@ -1,1 +1,1 @@
-*Name is a program for mapping your network, you can see
+PacketSorter 9000 is a program for mapping your network, you can see
