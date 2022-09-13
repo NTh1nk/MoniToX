@@ -1,1 +1,1 @@
-*Name is a program f
+*Name is a program for mapping your network, you can see
