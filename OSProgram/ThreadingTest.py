@@ -1,9 +1,8 @@
 import http
 import threading
 from struct import pack
+import sys
 from time import sleep
-from tkinter.tix import COLUMN
-from tracemalloc import start
 import pyshark
 from matplotlib import pyplot as plt
 import numpy as np
