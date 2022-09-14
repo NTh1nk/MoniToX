@@ -47,6 +47,16 @@ def CreateGraph ():
     #plt.table(cellText=[list(users.values())], colLabels=list(users.keys()))
     plt.pause(0.05)
     
+def SaveData():   
+    global users    
+    with open("UserData.txt", 'w') as f:
+     sys.stdout = f
+
+     i=0
+    while i<10:
+        print('Result%s'%str(2*users))
+        i+=1
+    f.close()
 
 threads = []
 fig = plt.figure(figsize =(10, 7))
