@@ -52,6 +52,7 @@ def SaveData():
     global users
     global dns 
     with open("Cache/UserData.txt", 'w') as f:
+        sys.stdout = f
         print("These are the searches", dns, "These are the users", users)
         f.close()
 
