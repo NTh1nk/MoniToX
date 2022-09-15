@@ -49,14 +49,9 @@ def CreateGraph ():
     
 def SaveData():   
     global users    
-    with open("UserData.txt", 'w') as f:
-     sys.stdout = f
-
-     i=0
-    while i<10:
-        print('Result%s'%str(2*users))
-        i+=1
-    f.close()
+    with open("Cache/UserData.txt", 'w') as f:
+        print(users)
+        f.close()
 
 threads = []
 fig = plt.figure(figsize =(10, 7))
