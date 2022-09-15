@@ -33,7 +33,8 @@ def Check_Packets():
             if "DNS" in packet:
                 if packet.dns.qry_name not in dns:   
                     dns[packet.dns.qry_name] = 0      
-                dns[packet.dns.qry_name] += 1  
+                dns[packet.dns.qry_name] += 1 
+                SaveData()
 
                 
 
@@ -48,9 +49,10 @@ def CreateGraph ():
     plt.pause(0.05)
     
 def SaveData():   
-    global users    
+    global users
+    global dns 
     with open("Cache/UserData.txt", 'w') as f:
-        print(users)
+        print("These are the searches", dns, "These are the users", users)
         f.close()
 
 threads = []
