@@ -6,12 +6,16 @@ from time import sleep
 import pyshark
 from matplotlib import pyplot as plt
 import numpy as np
+import tkinter as tk
+from tkinter import filedialog, Text
+import os
 ip = {}
 os = {}
 http = {}
 dns = {}
 users = {}
 capture = pyshark.LiveCapture(interface='WiFi')
+
 
 def Check_Packets():
     global os
@@ -34,9 +38,6 @@ def Check_Packets():
                 if packet.dns.qry_name not in dns:   
                     dns[packet.dns.qry_name] = 0      
                 dns[packet.dns.qry_name] += 1 
-                SaveData()
-
-                
 
         print(dns, users)
 
@@ -52,24 +53,38 @@ def SaveData():
     global users
     global dns 
     with open("Cache/UserData.txt", 'w') as f:
-        sys.stdout = f
-        print("These are the searches", dns, "These are the users", users)
-        f.close()
+
+        f.write(f"These are the searches {dns}. These are the users {users}")
 
 threads = []
 fig = plt.figure(figsize =(10, 7))
-plt.ion()
-plt.show()
-t = threading.Thread(target=Check_Packets)
-t2 = threading.Thread(target=CreateGraph)
-t.daemon = True
-t2.daemon = True    
-threads.append(t)
-threads.append(t2)
 
+t = threading.Thread(target=Check_Packets)
+t.daemon = False
+threads.append(t)
 threads[0].start()
-while True:
-    CreateGraph()
+def graph():
+    plt.ion()
+    plt.show()
+    while True:
+     CreateGraph()
+def Gui():
+    
+    root = tk.Tk()
+    
+    canvas = tk.Canvas(root, height=700, width=1000, bg="#2c2d7d")
+    canvas.pack()
+    frame = tk.Frame(root, bg="white")
+    frame.place(relwidth=0.8, relheight=0.8, relx=0.1, rely=0.1)
+
+    StartGraph = tk.Button(root, text="Graph", padx=10, pady=5, fg="white", bg="#2c2d7d", command=graph)
+    Save= tk.Button(root, text="Save", padx=10, pady=5, fg="white", bg="#2c2d7d", command=SaveData)
+
+    Save.pack(side='left', anchor='e', expand=True)
+    StartGraph.pack(side='right', anchor='w', expand=True)
+    root.mainloop()
+Gui()
+
 
 threads[0].join()
 
