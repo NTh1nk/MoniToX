@@ -1,30 +1,36 @@
+from functools import cache
 import tkinter as tk
+from tkinter import *
 from tkinter import filedialog, Text
 import os
 
 
 
-root = tk.Tk()
 
-def Cleanser():
-    print("Works")
+def openFile():
+   with open("Cache/UserData.txt") as tf:
+        
+        data = tf.read()
+        txtarea.insert(END, data)
+        
 
-def graph():
-    print("works")
+ws = Tk()
+ws.title("Cleanser")
+ws.geometry("400x450")
+ws['bg']='#fb0'
+
+txtarea = Text(ws, width=40, height=20)
+txtarea.pack(pady=20)
+
+pathh = Entry(ws)
+pathh.pack(side=LEFT, expand=True, fill=X, padx=20)
 
 
-canvas = tk.Canvas(root, height=700, width=1000, bg="#2c2d7d")
-canvas.pack()
-frame = tk.Frame(root, bg="white")
-frame.place(relwidth=0.8, relheight=0.8, relx=0.1, rely=0.1)
 
-RunCleanser = tk.Button(root, text="Run", padx=10, pady=5, fg="white", bg="#2c2d7d", command=Cleanser)
-StartGraph = tk.Button(root, text="Graph", padx=10, pady=5, fg="white", bg="#2c2d7d", command=graph)
-Users = tk.Button(root, text="Users", padx=10, pady=5, fg="white", bg="#2c2d7d", command=Cleanser)
-Searches = tk.Button(root, text="DNS", padx=10, pady=5, fg="white", bg="#2c2d7d", command=Cleanser)
+Button(
+    ws, 
+    text="Open File", 
+    command=openFile
+    ).pack(side=RIGHT, expand=True, fill=X, padx=20)
 
-RunCleanser.pack(side='left', anchor='e', expand=True)
-StartGraph.pack(side='right', anchor='w', expand=True)
-Users.pack(side='right', anchor='w', expand=True)
-Searches.pack(side='left', anchor='e', expand=True)
-root.mainloop()
+ws.mainloop()
