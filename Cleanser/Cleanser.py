@@ -43,7 +43,6 @@ def Check_Packets():
         print(dns, users)
     
 def StopGr():
-    print("works")
     global GraphState
     GraphState = False
     
@@ -71,6 +70,8 @@ t.daemon = False
 threads.append(t)
 threads[0].start()
 def graph():
+    global GraphState
+    GraphState = True
     plt.ion()
     plt.show()
     while GraphState:
