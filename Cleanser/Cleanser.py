@@ -9,6 +9,7 @@ import numpy as np
 import tkinter as tk
 from tkinter import filedialog, Text
 import os
+GraphState = True
 ip = {}
 os = {}
 http = {}
@@ -40,7 +41,12 @@ def Check_Packets():
                 dns[packet.dns.qry_name] += 1 
 
         print(dns, users)
-
+    
+def StopGr():
+    print("works")
+    global GraphState
+    GraphState = False
+    
 def CreateGraph ():
     global os
     global ip
@@ -48,7 +54,8 @@ def CreateGraph ():
     plt.pie(os.values(), labels = os.keys(), colors=["b", "k", "g", "r","c","m","y"]) 
     #plt.table(cellText=[list(users.values())], colLabels=list(users.keys()))
     plt.pause(0.05)
-    
+
+
 def SaveData():   
     global users
     global dns 
@@ -66,7 +73,7 @@ threads[0].start()
 def graph():
     plt.ion()
     plt.show()
-    while True:
+    while GraphState:
      CreateGraph()
 def Gui():
     
@@ -79,9 +86,13 @@ def Gui():
 
     StartGraph = tk.Button(root, text="Graph", padx=10, pady=5, fg="white", bg="#2c2d7d", command=graph)
     Save= tk.Button(root, text="Save", padx=10, pady=5, fg="white", bg="#2c2d7d", command=SaveData)
+    StopGraph= tk.Button(root, text="StopGraph", padx=10, pady=5, fg="white", bg="#2c2d7d", command=StopGr)
+
 
     Save.pack(side='left', anchor='e', expand=True)
     StartGraph.pack(side='right', anchor='w', expand=True)
+    StopGraph.pack(side='left', anchor='e', expand=True)
+
     root.mainloop()
 Gui()
 
