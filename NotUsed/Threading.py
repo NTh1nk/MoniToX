@@ -1,13 +1,18 @@
 import threading
+GState = True
 def hi():
+    global GState
     print(hi)
-    while True:
+    while GState:
         print(1)
 
 
 
 def foo():
+    global GState
     print ("foo")
+    GState = False
+
 
 
 threads= []
@@ -25,5 +30,5 @@ threads[1].start()
 
 
 threads[1].join()
-threads[0].join()
+threads[0].join()   
 
