@@ -60,14 +60,18 @@ def Network():
     with open("Cache/NetList.txt", 'w') as net:
         net.write(socket.gethostbyname(socket.gethostname()))
 
-def SaveData():   
+def SaveData(txtarea):   
     global users
     global dns
+    
     with open("Cache/UserData.txt", 'w') as f:
 
         f.write(f"These are the searches {dns}. These are the users {users}")
 
+    
+    txtarea.insert(tk.END, dns)
 
+#Txtarea.replace(dns, tk.END, Txtarea.get(dns, tk.END).replace(dns, dns))
 threads = []
 fig = plt.figure(figsize =(10, 7))
 
@@ -96,7 +100,7 @@ def Gui():
     txtarea.pack(side="top")
     txtarea.insert(tk.END, dns)
     StartGraph = tk.Button(root, text="Graph", padx=10, pady=5, fg="white", bg="#2c2d7d", command=graph)
-    Save= tk.Button(root, text="Save", padx=10, pady=5, fg="white", bg="#2c2d7d", command=SaveData)
+    Save= tk.Button(root, text="Save", padx=10, pady=5, fg="white", bg="#2c2d7d", command=lambda: SaveData(txtarea=txtarea))
     StopGraph= tk.Button(root, text="StopGraph", padx=10, pady=5, fg="white", bg="#2c2d7d", command=StopGr)
     AddNet= tk.Button(root, text="Net", padx=10, pady=5, fg="white", bg="#2c2d7d", command=Network)
 
