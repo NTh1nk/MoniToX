@@ -71,7 +71,7 @@ def SaveData(txtarea):
     txtarea.delete("1.0","end")
     txtarea.insert(tk.END, dns)
 
-#Txtarea.replace(dns, tk.END, Txtarea.get(dns, tk.END).replace(dns, dns))
+
 threads = []
 fig = plt.figure(figsize =(10, 7))
 
