@@ -68,7 +68,7 @@ def SaveData(txtarea):
 
         f.write(f"These are the searches {dns}. These are the users {users}")
 
-    
+    txtarea.delete("1.0","end")
     txtarea.insert(tk.END, dns)
 
 #Txtarea.replace(dns, tk.END, Txtarea.get(dns, tk.END).replace(dns, dns))
