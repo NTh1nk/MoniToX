@@ -1,3 +1,4 @@
+from dataclasses import dataclass
 import http
 import threading
 from struct import pack
@@ -7,8 +8,9 @@ import pyshark
 from matplotlib import pyplot as plt
 import numpy as np
 import tkinter as tk
-from tkinter import filedialog, Text
+from tkinter import END, filedialog, Text
 import os
+import socket
 GraphState = True
 ip = {}
 os = {}
@@ -54,13 +56,17 @@ def CreateGraph ():
     #plt.table(cellText=[list(users.values())], colLabels=list(users.keys()))
     plt.pause(0.05)
 
+def Network():
+    with open("Cache/NetList.txt", 'w') as net:
+        net.write(socket.gethostbyname(socket.gethostname()))
 
 def SaveData():   
     global users
-    global dns 
+    global dns
     with open("Cache/UserData.txt", 'w') as f:
 
         f.write(f"These are the searches {dns}. These are the users {users}")
+
 
 threads = []
 fig = plt.figure(figsize =(10, 7))
@@ -76,24 +82,29 @@ def graph():
     plt.show()
     while GraphState:
      CreateGraph()
-def Gui():
     
+
+def Gui():
+    global dns
     root = tk.Tk()
     
     canvas = tk.Canvas(root, height=700, width=1000, bg="#2c2d7d")
     canvas.pack()
     frame = tk.Frame(root, bg="white")
     frame.place(relwidth=0.8, relheight=0.8, relx=0.1, rely=0.1)
-
+    txtarea = Text(frame, width=40, height=20)
+    txtarea.pack(side="top")
+    txtarea.insert(tk.END, dns)
     StartGraph = tk.Button(root, text="Graph", padx=10, pady=5, fg="white", bg="#2c2d7d", command=graph)
     Save= tk.Button(root, text="Save", padx=10, pady=5, fg="white", bg="#2c2d7d", command=SaveData)
     StopGraph= tk.Button(root, text="StopGraph", padx=10, pady=5, fg="white", bg="#2c2d7d", command=StopGr)
+    AddNet= tk.Button(root, text="Net", padx=10, pady=5, fg="white", bg="#2c2d7d", command=Network)
 
 
     Save.pack(side='left', anchor='e', expand=True)
     StartGraph.pack(side='right', anchor='w', expand=True)
     StopGraph.pack(side='left', anchor='e', expand=True)
-
+    AddNet.pack(side='left', anchor='e', expand=True)    
     root.mainloop()
 Gui()
 
