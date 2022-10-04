@@ -11,6 +11,7 @@ import tkinter as tk
 from tkinter import END, filedialog, Text
 import os
 import socket
+from tkinter import *
 GraphState = True
 ip = {}
 os = {}
@@ -91,7 +92,7 @@ def graph():
 def Gui():
     global dns
     root = tk.Tk()
-    
+    root.title("MoniToX")
     canvas = tk.Canvas(root, height=700, width=1000, bg="#2c2d7d")
     canvas.pack()
     frame = tk.Frame(root, bg="white")
