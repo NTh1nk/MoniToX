@@ -18,7 +18,7 @@ os = {}
 http = {}
 dns = {}
 users = {}
-capture = pyshark.LiveCapture(interface='WiFi')
+capture = pyshark.LiveCapture(interface='Ethernet')
 
 
 def Check_Packets():
@@ -33,11 +33,11 @@ def Check_Packets():
                 if packet.ip.src not in ip:
                     ip[packet.ip.src] = 0      
                 ip[packet.ip.src] += 1
-            if "SSDP" in packet:
-                if packet.ssdp.http_user_agent not in os:   
-                    os[packet.ssdp.http_user_agent] = 0      
-                os[packet.ssdp.http_user_agent] += 1
-                users[packet.ip.src] = packet.ssdp.http_user_agent
+            #if "SSDP" in packet:
+             #   if packet.ssdp.http_user_agent not in os:   
+              #      os[packet.ssdp.http_user_agent] = 0      #Here is the raise atribute error
+               # os[packet.ssdp.http_user_agent] += 1
+               # users[packet.ip.src] = packet.ssdp.http_user_agent
             if "DNS" in packet:
                 if packet.dns.qry_name not in dns:   
                     dns[packet.dns.qry_name] = 0      
