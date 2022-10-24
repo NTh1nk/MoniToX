@@ -1,4 +1,5 @@
 
+from this import d
 import threading
 import sys
 from time import sleep
@@ -8,10 +9,11 @@ import os
 import socket
 ip = {}
 os = {}
+UserINP = ""
 http = {}
 dns = {}
 users = {}
-capture = pyshark.LiveCapture(interface='Ethernet')
+capture = pyshark.LiveCapture(interface='WiFi')
 
 
 def Check_Packets():
@@ -35,10 +37,28 @@ def Check_Packets():
                 if packet.dns.qry_name not in dns:   
                     dns[packet.dns.qry_name] = 0      
                 dns[packet.dns.qry_name] += 1 
-
-        print(dns, users)
     
 
+def UserInput():
+    UserINP = input("")
+    if UserINP == "Help":
+        print("DNS, USER, IP")
+    else: 
+        if UserINP == "DNS":
+               print("\033[1;32;40m\n")
+               print(dns)
+        else: 
+            if UserINP == "USER":
+                print("\033[1;32;40m\n")
+                print(users)
+            else:
+                if UserINP == "IP":
+                    print("\033[1;32;40m\n")
+                    print(ip)
+                else:
+                    print("\033[1;32;40m\n")
+                    print("Error")
+    UserInput()
 
 def Network():
     with open("Cache/NetList.txt", 'w') as net:
@@ -66,6 +86,7 @@ threads[0].start()
 
 def Gui():
     global dns
+    global UserINP
     print("\033[1;32;40m\n")
     print("   _____                ._____________   ____  ___")
     print(" /     \   ____   ____ |__\__    ___/___\   \/   \.")
@@ -73,7 +94,16 @@ def Gui():
     print("\____|__  /\____/|___|  /__| |____| \____/___\/   /")
     print("        \/            \/                       \_/")
    
-    print(dns, ip, os)
+    UserINP = input("Welcome to MoniToX, type help for more info: ")
+    if UserINP == "Help":
+        print("DNS, USER, IP")
+    else: 
+        if UserINP == "DNS":
+               print("\033[1;32;40m\n")
+               print(dns)
+        else: print("Error")
+    UserInput()
+
 Gui()
 
 
